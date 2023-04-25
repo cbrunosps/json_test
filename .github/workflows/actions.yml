@@ -19,5 +19,6 @@ jobs:
       - name: Comprobacion longitud caracteres
         run: |
           ls -la
+          import os
           python main.py
           print(os.environ['PRIVATE'])
