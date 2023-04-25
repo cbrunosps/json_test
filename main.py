@@ -1,5 +1,5 @@
 import os
-from sys import exit
+#from sys import exit
 import json
 
 def main():
@@ -21,7 +21,7 @@ def main():
                         print(f'El nombre {name} esta en la longitud correcta')
                 # Si en recurso NO existe "FunctionName", lo ignoramos
                 except:
-                    exit(f'No existe "Properties":"FunctionName" en {item} \n')
+                    print(f'No existe "Properties":"FunctionName" en {item} \n')
 
 
 if __name__ == '__main__':
