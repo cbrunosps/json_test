@@ -13,7 +13,7 @@ def main():
             if dic['Resources'][item]['Type'] == 'AWS::Serverless::Function':
                 try:
                     name = dic['Resources'][item]['Properties']['FunctionName']['Fn::Sub']
-                    if len(name) <= 10:
+                    if len(name) <= 100:
                         print(f'-> Para "{item}" el nombre: "{name}", esta en la longitud correcta. [✅]')
                     else:
                         print(f'-> Para "{item}" el nombre: "{name}", es demaciado largo. [❌]')
