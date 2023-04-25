@@ -16,27 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
-      - name: Run a Python script
+      - name: Comprobacion longitud caracteres
         run: |
           ls -la
           python main.py
-          echo $GITHUB_REF
-      - name: Python inline
-        env:
-          SALUDO: Hola desde github Actions
-        # Aquí se le dica a Github ejecuta el comando python en la terminal y luego pega todo lo que viene
-        # en el paso anterior 'Run a Python script' no lo indicas pero eso es 
-        # porque por defecto usa bash para imagenes linux
-        shell: python
-        run: |
-          import os
-          print("Saludos")
-          # Aquí Python lee tal cual la variable de ambiente como lo hace en tu PC
-          # Es similar al script que ya creaste
-          print(os.environ['SALUDO'])
-          # Aquí Python no obtiene la variable de ambiente sino que le llega un
-          # print normalito: print("Hola desde github Actions") como en el echo de "Run a Python script"
-          print("${{env.SALUDO}}")
-          # Hay más valores que Python puede remplazar antes de ejecutar el script puedes verlos acá
-          # https://docs.github.com/en/actions/learn-github-actions/contexts
-          print("${{github.ref}}")
+          echo $?
