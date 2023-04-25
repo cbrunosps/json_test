@@ -14,7 +14,7 @@ def main():
                 try:
                     name = dic['Resources'][item]['Properties']['FunctionName']
                     print(f'Sí existe "Properties":"FunctionName" en {item}')
-                    if len(name)>= 5:
+                    if len(name)<= 5:
                         print(f'El nombre {name} es demaciado largo')
                     else:
                         print(f'El nombre {name} esta en la longitud correcta')
