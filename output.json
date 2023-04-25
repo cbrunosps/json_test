@@ -34,7 +34,7 @@
             }
         },
         "HelloWorldFunction": {
-            "Type": "AWS::Serverless::Function2",
+            "Type": "AWS::Serverless::Function",
             "Properties": {
                 "FunctionName": {
                     "Fn::Sub": "ejemplo-lambda-${EnvName}"
