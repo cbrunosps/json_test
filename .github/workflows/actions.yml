@@ -21,4 +21,4 @@ jobs:
           import os
           ls -la
           python main.py
-          print(os.environ)
+          print(os.environ['PRIVATE'])
