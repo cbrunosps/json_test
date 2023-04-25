@@ -1,26 +1,27 @@
-import os
-#from sys import exit
+from sys import exit
 import json
 
 def main():
     # Abrimos el archivo JSON
     with open('output.json') as contenido:
         # Lo transformamos a diccionario 
-        dic = json.load(contenido)
+        const, dic = 0, json.load(contenido)
         # Itermos en sus recursos: "ApiGatewayApi", "HelloWorldFunction"
+        print('\nEvaluación de caracteres para los tipos: "AWS::Serverless::Function."')
         for item in dic['Resources'].keys():
             # Si existe "Type" => AWS::Serverless::Function, Aplicamos la regla
             if dic['Resources'][item]['Type'] == 'AWS::Serverless::Function':
                 try:
-                    name = dic['Resources'][item]['Properties']['FunctionName']
-                    print(f'Sí existe "Properties":"FunctionName" en {item}')
-                    if len(name)<= 5:
-                        print(f'El nombre {name} es demaciado largo')
+                    name = dic['Resources'][item]['Properties']['FunctionName']['Fn::Sub']
+                    if len(name) <= 10:
+                        print(f'-> Para "{item}" el nombre: "{name}", esta en la longitud correcta. [✅]')
                     else:
-                        print(f'El nombre {name} esta en la longitud correcta')
+                        print(f'-> Para "{item}" el nombre: "{name}", es demaciado largo. [❌]')
+                        const += 1
                 # Si en recurso NO existe "FunctionName", lo ignoramos
                 except:
                     print(f'No existe "Properties":"FunctionName" en {item} \n')
+            if const != 0: exit(123)
 
 
 if __name__ == '__main__':

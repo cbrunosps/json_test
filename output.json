@@ -33,6 +33,24 @@
                 "Name": "ejemplo-apigateway"
             }
         },
+        "HelloWorldFunction0": {
+            "Type": "AWS::Serverless::Function",
+            "Properties": {
+                "FunctionName": {
+                    "Fn::Sub": "EnvName"
+                },
+                "Name": "ejemplo-apigateway"
+            }
+        },
+        "ApiGatewayApi3": {
+            "Type": "AWS::Serverless::Api",
+            "Properties": {
+                "StageName": {
+                    "Ref": "EnvName"
+                },
+                "Name": "ejemplo-apigateway"
+            }
+        },
         "HelloWorldFunction": {
             "Type": "AWS::Serverless::Function",
             "Properties": {
