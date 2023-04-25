@@ -8,7 +8,6 @@ def main():
         # Lo transformamos a diccionario 
         dic = json.load(contenido)
         # Itermos en sus recursos: "ApiGatewayApi", "HelloWorldFunction"
-        os.environ ['PRIVATE'] = '25123'
         for item in dic['Resources'].keys():
             # Si existe "Type" => AWS::Serverless::Function, Aplicamos la regla
             if dic['Resources'][item]['Type'] == 'AWS::Serverless::Function':
