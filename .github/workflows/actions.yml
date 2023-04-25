@@ -18,6 +18,8 @@ jobs:
       
       - name: Comprobacion longitud caracteres
         run: |
+          import os
+          echo "Se está validando si existe el repositorio 'Properties':'FunctionName'"
           ls -la
           python main.py
-          echo $?
+          print(os.environ)
