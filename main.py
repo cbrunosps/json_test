@@ -21,7 +21,7 @@ def main():
                 # Si en recurso NO existe "FunctionName", lo ignoramos
                 except:
                     print(f'No existe "Properties":"FunctionName" en {item} \n')
-            if const != 0: exit("Error en la longitud de los caracteres permitidos.")
+            if const != 0: exit("\nError en la longitud de los caracteres permitidos.")
 
 
 if __name__ == '__main__':
