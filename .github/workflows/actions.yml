@@ -16,10 +16,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: yaml to json
+      - name: Convertir template.yaml a template.json
         run: |
           pip install cfn-flip==1.3.0
           cfn-flip template.yaml template.json
+          echo "Se convirtió el archivo"
       
       - name: Comprobacion longitud caracteres
         run: |
