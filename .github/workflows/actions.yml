@@ -19,4 +19,4 @@ jobs:
       - name: Comprobacion longitud caracteres
         run: |
           ls -la
-          python main.py
+          python cf-rules.py -f template.json
