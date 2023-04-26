@@ -34,6 +34,14 @@ def main():
             elif dic['Resources'][item]['Type'] == 'AWS::Events::Rule':
                 name = dic['Resources'][item]['Properties']['EventBusName']['Fn::Sub'].replace('${EnvName}', '')
                 numCaract = 64 - 7
+            # "Type" => AWS::StepFunctions::StateMachine, 
+            elif dic['Resources'][item]['Type'] == 'AWS::StepFunctions::StateMachine':
+                name = dic['Resources'][item]['Properties']['StateMachineName']['Fn::Sub'].replace('${EnvName}', '')
+                numCaract = 64 - 7
+            # "Type" => AWS::SQS::Queue, 
+            elif dic['Resources'][item]['Type'] == 'AWS::SQS::Queue':
+                name = dic['Resources'][item]['Properties']['QueueName']['Fn::Sub'].replace('${EnvName}', '')
+                numCaract = 64 - 7
 
             # REGLAS:
             try:

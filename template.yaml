@@ -22,11 +22,22 @@ Resources:
     Properties:
       StageName: !Ref 'EnvName'
       Name: ejemplo-apigateway
+  MyStateMachine:
+    Type: AWS::StepFunctions::StateMachine
+    Properties:
+      StateMachineName: !Sub HelloWorld-StateMachine
+      StateMachineType: STANDARD
+      DefinitionString: empty
+      RoleArn: arn:aws:iam::111122223333:role/service-role/StatesExecutionRole-us-east-1;
+  MyQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub SampleQueue
   EventRuleRegion1:
     Type: AWS::Events::Rule
     Properties:
       Description: Routes to us-east-1 event bus
-      EventBusName: MyBusName
+      EventBusName: !Sub 'MyBusName'
       State: ENABLED
       EventPattern:
         source:
@@ -41,7 +52,7 @@ Resources:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain
     Properties:
-      BucketName: DOC-EXAMPLE-BUCKET
+      BucketName: !Sub 'DOC-EXAMPLE-BUCKET'
   HelloWorldFunction0:
     Type: AWS::Serverless::Function
     Properties:
