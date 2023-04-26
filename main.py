@@ -1,28 +1,41 @@
-from sys import exit
 import json
+from sys import exit # Código de salida: https://linuxhint.com/python-exit-codes/
 
 def main():
     # Abrimos el archivo JSON
     with open('output.json') as contenido:
         # Lo transformamos a diccionario 
         const, dic = 0, json.load(contenido)
-        # Itermos en sus recursos: "ApiGatewayApi", "HelloWorldFunction"
-        print('\nEvaluación de caracteres para los tipos: "AWS::Serverless::Function."')
+        # Itermos en sus recursos,
         for item in dic['Resources'].keys():
-            # Si existe "Type" => AWS::Serverless::Function, Aplicamos la regla
+            # "Type" => AWS::Serverless::Function, 
             if dic['Resources'][item]['Type'] == 'AWS::Serverless::Function':
-                try:
-                    name = dic['Resources'][item]['Properties']['FunctionName']['Fn::Sub']
-                    if len(name) <= 10:
-                        print(f'-> Para "{item}" el nombre: "{name}", esta en la longitud correcta. [✅]')
-                    else:
-                        print(f'-> Para "{item}" el nombre: "{name}", es demaciado largo. [❌]')
-                        const += 1
-                # Si en recurso NO existe "FunctionName", lo ignoramos
-                except:
-                    print(f'No existe "Properties":"FunctionName" en {item} \n')
-            if const != 0: exit("\nError en la longitud de los caracteres permitidos.")
+                name = dic['Resources'][item]['Properties']['FunctionName']['Fn::Sub'].replace('${EnvName}', '')
+                numCaract = 64 - 7
+            # "Type" => AWS::Serverless::Function, 
+            elif dic['Resources'][item]['Type'] == 'AWS::S3::Bucket':
+                name = dic['Resources'][item]['Properties']['BucketName'].replace('${EnvName}', '')
+                numCaract = 63 - 7
+            # "Type" => AWS::Events::Rule, 
+            elif dic['Resources'][item]['Type'] == 'AWS::Events::Rule':
+                name = dic['Resources'][item]['Properties']['EventBusName'].replace('${EnvName}', '')
+                numCaract = 64 - 7
 
+            # REGLAS:
+            try:
+                # (1) Validamos caracteres
+                if len(name) <= numCaract:
+                    print(f'-> Para "{item}" el nombre: "{name}", esta en la longitud correcta. [✅]')
+                else:
+                    print(f'-> Para "{item}" el nombre: "{name}", es demaciado largo. [❌]')
+                    const += 1
+                # (2) Validamos que no exista otro "${"
+                if name.find("${") != -1 : const += 1 
+            # En caso de no haber problemas, ignoramos
+            except:
+                pass
+        # Si al menos una regla no se cumple, se levanta un error:
+        if const != 0 : exit("Error en la longitud de los caracteres permitidos.")
 
 if __name__ == '__main__':
     main()

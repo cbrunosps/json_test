@@ -33,6 +33,41 @@
                 "Name": "ejemplo-apigateway"
             }
         },
+        "EventRuleRegion1": {
+            "Type": "AWS::Events::Rule",
+            "Properties": {
+               "Description": "Routes to us-east-1 event bus",
+               "EventBusName": "MyBusName",
+               "State": "ENABLED",
+               "EventPattern": {
+                  "source": [
+                      "MyTestApp"
+                  ],
+                  "detail": [
+                      "MyTestAppDetail"
+                  ]
+               },
+               "Targets": [
+                  {
+                      "Arn": "arn:aws:events:us-east-1:123456789012:event-bus/CrossRegionDestinationBus",
+                      "Id": " CrossRegionDestinationBus",
+                      "RoleArn": {
+                         "Fn::GetAtt": [
+                            "EventBridgeIAMrole",
+                            "Arn"
+                         ]
+                      }
+                  }
+              ]
+         }
+        },
+        "S3Bucket": {
+            "Type": "AWS::S3::Bucket",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+                "BucketName": "DOC-EXAMPLE-BUCKET"
+            }
+        },
         "HelloWorldFunction0": {
             "Type": "AWS::Serverless::Function",
             "Properties": {
