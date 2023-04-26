@@ -18,7 +18,7 @@ jobs:
 
       - name: yaml to json
         run: |
-          pip install cfn-lint==1.3.0
+          pip install cfn-flip==1.3.0
           cfn-flip template.yaml template.json
       
       - name: Comprobacion longitud caracteres
