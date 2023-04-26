@@ -28,11 +28,11 @@ def main():
                 numCaract = 64 - 7
             # "Type" => AWS::Serverless::Function, 
             elif dic['Resources'][item]['Type'] == 'AWS::S3::Bucket':
-                name = dic['Resources'][item]['Properties']['BucketName'].replace('${EnvName}', '')
+                name = dic['Resources'][item]['Properties']['BucketName']['Fn::Sub'].replace('${EnvName}', '')
                 numCaract = 63 - 7
             # "Type" => AWS::Events::Rule, 
             elif dic['Resources'][item]['Type'] == 'AWS::Events::Rule':
-                name = dic['Resources'][item]['Properties']['EventBusName'].replace('${EnvName}', '')
+                name = dic['Resources'][item]['Properties']['EventBusName']['Fn::Sub'].replace('${EnvName}', '')
                 numCaract = 64 - 7
 
             # REGLAS:
