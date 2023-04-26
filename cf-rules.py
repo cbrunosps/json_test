@@ -1,9 +1,23 @@
 import json
 from sys import exit # Código de salida: https://linuxhint.com/python-exit-codes/
+import argparse
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument(
+    "-f",
+    "--file-name",
+    dest="file",
+    required=True,
+    help="Archivo template en formato json"
+)
 
 def main():
+    args = parser.parse_args()
+    fileVariables = args.file
+    
     # Abrimos el archivo JSON
-    with open('output.json') as contenido:
+    with open(fileVariables) as contenido:
         # Lo transformamos a diccionario 
         const, dic = 0, json.load(contenido)
         # Itermos en sus recursos,
